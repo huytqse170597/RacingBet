@@ -1,6 +1,8 @@
 package com.prm392.racing;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Button btnStart,btnGuide;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,5 +23,19 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        btnStart = findViewById(R.id.btnStart);
+        btnGuide = findViewById(R.id.btnGuide);
+
+        btnStart.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, RacingActivity.class);
+            startActivity(intent);
+        });
+
+        btnGuide.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, TutorialActivity.class);
+            startActivity(intent);
+        });
+
     }
 }
