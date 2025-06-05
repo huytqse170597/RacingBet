@@ -21,6 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".RacingActivity"/>
+        <activity android:name=".BetActivity"/>
+        <activity android:name=".TutorialActivity"/>
     </application>
 
 </manifest>
