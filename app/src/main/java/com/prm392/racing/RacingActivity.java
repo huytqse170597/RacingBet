@@ -207,7 +207,7 @@ public class RacingActivity extends AppCompatActivity {
         int runnerUp = finishOrder.get(1);
         String resultText = "VỀ NHẤT: Ngựa " + winner + " - VỀ NHÌ: Ngựa " + runnerUp;
 
-        int betChange = 0 - currentTotalBet;
+        int betChange = 0;
         int totalBet = 0;
         for (Map.Entry<Integer, Integer> entry : betHorsesMap.entrySet()) {
             int horseNumber = entry.getKey();
@@ -216,12 +216,14 @@ public class RacingActivity extends AppCompatActivity {
             if (horseNumber == winner) {
                 int win = (int) (betAmount * 1.9);
                 totalCoins += win;
-                betChange += win;
+                betChange += win - betAmount;
+                continue;
             } else if (horseNumber == runnerUp) {
                 totalCoins += betAmount;
-                betChange += betAmount;
+                continue;
             } else if (horseNumber != winner && horseNumber != runnerUp) {
                 betChange -= betAmount;
+
             }
         }
 
