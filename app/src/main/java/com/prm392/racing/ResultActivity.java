@@ -29,12 +29,12 @@ public class ResultActivity extends AppCompatActivity {
 
         String betText;
         if (betChange == 0 && totalBet > 0) {
-            betText = "Tiền cược được/mất: -" + totalBet;
+            betText = "-" + totalBet;
         } else {
-            betText = "Tiền cược được/mất: " + betChange;
+            betText = "+" + betChange;
         }
         tvBet.setText(betText);
-        tvCoins.setText("Số xu còn lại: " + totalCoins);
+        tvCoins.setText("" + totalCoins);
 
         if (betChange > 0) {
             tvBet.setTextColor(Color.parseColor("#388E3C")); // xanh lá
