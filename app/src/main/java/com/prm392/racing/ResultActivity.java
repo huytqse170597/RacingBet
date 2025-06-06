@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ResultActivity extends AppCompatActivity {
@@ -27,33 +28,33 @@ public class ResultActivity extends AppCompatActivity {
 
         tvResult.setText(result);
 
-        String betText;
-        if (betChange == 0 && totalBet > 0) {
-            betText = "-" + totalBet;
-        } else {
-            betText = "+" + betChange;
-        }
-        tvBet.setText(betText);
-        tvCoins.setText("" + totalCoins);
-
+        String betText = "";
         if (betChange > 0) {
-            tvBet.setTextColor(Color.parseColor("#388E3C")); // xanh lá
+            betText = "+" + betChange;
         } else {
-            tvBet.setTextColor(Color.parseColor("#D32F2F")); // đỏ
+            betText = "" + betChange;
         }
+            tvBet.setText(betText);
+            tvCoins.setText("" + totalCoins);
 
-        btnContinue.setOnClickListener(v -> {
-            Intent resultIntent = new Intent();
-            resultIntent.putExtra("TOTAL_COINS", totalCoins);
-            setResult(RESULT_OK, resultIntent);
-            finish();
-        });
+            if (betChange > 0) {
+                tvBet.setTextColor(Color.parseColor("#388E3C")); // xanh lá
+            } else {
+                tvBet.setTextColor(Color.parseColor("#D32F2F")); // đỏ
+            }
 
-        btnQuit.setOnClickListener(v -> {
-            Intent mainIntent = new Intent(ResultActivity.this, MainActivity.class);
-            mainIntent.putExtra("TOTAL_COINS", totalCoins);
-            startActivity(mainIntent);
-            finish();
-        });
+            btnContinue.setOnClickListener(v -> {
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("TOTAL_COINS", totalCoins);
+                setResult(RESULT_OK, resultIntent);
+                finish();
+            });
+
+            btnQuit.setOnClickListener(v -> {
+                Intent mainIntent = new Intent(ResultActivity.this, MainActivity.class);
+                mainIntent.putExtra("TOTAL_COINS", totalCoins);
+                startActivity(mainIntent);
+                finish();
+            });
+        }
     }
-}
