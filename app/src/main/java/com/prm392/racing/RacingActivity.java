@@ -205,7 +205,7 @@ public class RacingActivity extends AppCompatActivity {
     private void calculateResults() {
         int winner = finishOrder.get(0);
         int runnerUp = finishOrder.get(1);
-        String resultText = "VỀ NHẤT: Ngựa " + winner + " - VỀ NHÌ: Ngựa " + runnerUp;
+        String resultText = "#1. Ngựa " + winner + " - #2. Ngựa " + runnerUp;
 
         int betChange = 0;
         int totalBet = 0;
