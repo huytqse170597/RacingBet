@@ -12,7 +12,7 @@
         android:background="#0A2E23"
         android:gravity="center"
         android:padding="10dp"
-        android:text="RACING CHAMPIONSHIP"
+        android:text="Giải vô địch ngựa"
         android:textColor="#FFD700"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -75,7 +75,7 @@
                     android:layout_marginStart="4dp"
                     android:background="#3FFF0000"
                     android:padding="4dp"
-                    android:text="HORSE 1"
+                    android:text="Ngựa 1"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold" />
             </RelativeLayout>
@@ -102,7 +102,7 @@
                     android:layout_marginStart="4dp"
                     android:background="#3F0000FF"
                     android:padding="4dp"
-                    android:text="HORSE 2"
+                    android:text="Ngựa 2"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold" />
             </RelativeLayout>
@@ -129,7 +129,7 @@
                     android:layout_marginStart="4dp"
                     android:background="#3FFFFF00"
                     android:padding="4dp"
-                    android:text="HORSE 3"
+                    android:text="Ngựa 3"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold" />
             </RelativeLayout>
@@ -225,7 +225,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="WINNER - RUNNER UP"
+                            android:text="Ngựa Chiến Thắng"
                             android:textColor="#FFFFFF"
                             android:textSize="16sp" />
                     </LinearLayout>

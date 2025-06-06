@@ -16,8 +16,9 @@
         <!-- Set LoginActivity as the launcher activity -->
         <activity
             android:name=".LoginActivity"
-            android:exported="true">
-            <intent-filter>
+            android:exported="true"
+            android:launchMode="singleTask">
+        <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

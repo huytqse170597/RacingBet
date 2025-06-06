@@ -1,6 +1,7 @@
 package com.prm392.racing;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -34,6 +35,7 @@ public class RacingActivity extends AppCompatActivity {
     private List<Float> horsePositions = new ArrayList<>(); // vị trí
     private List<Integer> finishOrder = new ArrayList<>(); // xep hang
     private float finishLineX; // Vị trí X của vạch đích
+    private MediaPlayer racingTonePlayer;
 
     private static final int REQUEST_BET = 100;
 
@@ -41,6 +43,10 @@ public class RacingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_racing);
+
+        racingTonePlayer = MediaPlayer.create(this, R.raw.nhac_dua_ngua_2);
+        racingTonePlayer.setLooping(true);
+        racingTonePlayer.start();
 
         horse1 = findViewById(R.id.horse1);
         horse2 = findViewById(R.id.horse2);
@@ -69,6 +75,7 @@ public class RacingActivity extends AppCompatActivity {
         btnStart.setOnClickListener(v -> {
             if (!isRaceRunning) {
                 totalCoins -= currentTotalBet;
+                updateCoinDisplay();
                 currentTotalBet = 0;
                 startRace();
             }
@@ -112,7 +119,17 @@ public class RacingActivity extends AppCompatActivity {
             updateCoinDisplay();
         }
     }
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (racingTonePlayer != null) {
+            if (racingTonePlayer.isPlaying()) {
+                racingTonePlayer.stop();
+            }
+            racingTonePlayer.release();
+            racingTonePlayer = null;
+        }
+    }
     private void startRace() {
         isRaceRunning = true;
         btnStart.setEnabled(false);
@@ -127,9 +144,9 @@ public class RacingActivity extends AppCompatActivity {
         horse2.setTranslationX(0);
         horse3.setTranslationX(0);
 
-        float baseSpeed1 = 5.0f + random.nextFloat() * 2.0f;
-        float baseSpeed2 = 5.0f + random.nextFloat() * 2.0f;
-        float baseSpeed3 = 5.0f + random.nextFloat() * 2.0f;
+        float baseSpeed1 = 7.0f + random.nextFloat() * 8.0f;
+        float baseSpeed2 = 7.0f + random.nextFloat() * 8.0f;
+        float baseSpeed3 = 7.0f + random.nextFloat() * 8.0f;
 
         float[] horseModifiers = { 1.0f, 1.0f, 1.0f }; // yếu tố bên ngoài
         int[] stamina = { 100, 100, 100 }; // Độ bền đồng đều cho mọi ngựa
@@ -207,6 +224,12 @@ public class RacingActivity extends AppCompatActivity {
         int runnerUp = finishOrder.get(1);
         String resultText = "#1. Ngựa " + winner + " - #2. Ngựa " + runnerUp;
 
+        MediaPlayer winPlayer = MediaPlayer.create(this, R.raw.win);
+        winPlayer.start();
+        winPlayer.setOnCompletionListener(mp -> {
+            mp.release();
+        });
+
         int betChange = 0;
         int totalBet = 0;
         for (Map.Entry<Integer, Integer> entry : betHorsesMap.entrySet()) {
@@ -238,7 +261,16 @@ public class RacingActivity extends AppCompatActivity {
         intent.putExtra("BET_CHANGE", betChange);
         intent.putExtra("TOTAL_COINS", totalCoins);
         intent.putExtra("TOTAL_BET", totalBet);
+        horsePositions.clear();
+        horsePositions.add(0f);
+        horsePositions.add(0f);
+        horsePositions.add(0f);
+        // Reset lại vị trí hình ảnh của các ngựa
+        horse1.setTranslationX(0f);
+        horse2.setTranslationX(0f);
+        horse3.setTranslationX(0f);
         startActivity(intent);
+        tvResult.setText("WINNER - RUNNER UP");
     }
 
     private void updateCoinDisplay() {
