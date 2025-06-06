@@ -125,9 +125,9 @@ public class RacingActivity extends AppCompatActivity {
         horse2.setTranslationX(0);
         horse3.setTranslationX(0);
 
-        float baseSpeed1 = 2.0f + random.nextFloat() * 2.0f;
-        float baseSpeed2 = 2.0f + random.nextFloat() * 2.0f;
-        float baseSpeed3 = 2.0f + random.nextFloat() * 2.0f;
+        float baseSpeed1 = 5.0f + random.nextFloat() * 2.0f;
+        float baseSpeed2 = 5.0f + random.nextFloat() * 2.0f;
+        float baseSpeed3 = 5.0f + random.nextFloat() * 2.0f;
 
         float[] horseModifiers = {1.0f, 1.0f, 1.0f}; // yếu tố bên ngoài
         int[] stamina = {100, 100, 100}; // Độ bền đồng đều cho mọi ngựa
