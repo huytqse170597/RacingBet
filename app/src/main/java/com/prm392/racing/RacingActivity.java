@@ -52,16 +52,14 @@ public class RacingActivity extends AppCompatActivity {
         tvCoins = findViewById(R.id.tvCoins);
         btnBet = findViewById(R.id.btnBet);
 
-
         updateCoinDisplay();
         if (!isBet) {
             btnStart.setVisibility(View.GONE);
         }
 
-
-//        betHorsesMap.put(1, 50);
-//        betHorsesMap.put(2, 40);
-//        betHorsesMap.put(3, 30);
+        // betHorsesMap.put(1, 50);
+        // betHorsesMap.put(2, 40);
+        // betHorsesMap.put(3, 30);
 
         finishLine.post(() -> {
             finishLineX = finishLine.getX() + finishLine.getWidth();
@@ -83,7 +81,7 @@ public class RacingActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        //gửi số tiền cược sang BetActivity để bet
+        // gửi số tiền cược sang BetActivity để bet
         btnBet.setOnClickListener(v -> {
             Intent intent = new Intent(this, BetActivity.class);
             intent.putExtra("TOTAL_COINS", totalCoins);
@@ -94,7 +92,7 @@ public class RacingActivity extends AppCompatActivity {
 
     }
 
-    //Nhận data bet trả về
+    // Nhận data bet trả về
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -108,6 +106,10 @@ public class RacingActivity extends AppCompatActivity {
                 btnStart.setVisibility(View.VISIBLE);
                 isBet = true;
             }
+        } else if (requestCode == 200 && resultCode == RESULT_OK && data != null) {
+            int totalCoinsResult = data.getIntExtra("TOTAL_COINS", totalCoins);
+            totalCoins = totalCoinsResult;
+            updateCoinDisplay();
         }
     }
 
@@ -129,8 +131,8 @@ public class RacingActivity extends AppCompatActivity {
         float baseSpeed2 = 2.0f + random.nextFloat() * 2.0f;
         float baseSpeed3 = 2.0f + random.nextFloat() * 2.0f;
 
-        float[] horseModifiers = {1.0f, 1.0f, 1.0f}; // yếu tố bên ngoài
-        int[] stamina = {100, 100, 100}; // Độ bền đồng đều cho mọi ngựa
+        float[] horseModifiers = { 1.0f, 1.0f, 1.0f }; // yếu tố bên ngoài
+        int[] stamina = { 100, 100, 100 }; // Độ bền đồng đều cho mọi ngựa
 
         Runnable raceRunnable = new Runnable() {
             @Override
@@ -140,7 +142,8 @@ public class RacingActivity extends AppCompatActivity {
                     if (horsePositions.get(i) >= finishLineX) {
                         if (!finishOrder.contains(i + 1)) {
                             finishOrder.add(i + 1);
-                            Log.d("HorseFinish", "Ngựa " + (i + 1) + " đã về đích tại vị trí: " + horsePositions.get(i));
+                            Log.d("HorseFinish",
+                                    "Ngựa " + (i + 1) + " đã về đích tại vị trí: " + horsePositions.get(i));
                         }
                         if (finishOrder.size() >= 2) {
                             raceFinished = true;
@@ -202,27 +205,39 @@ public class RacingActivity extends AppCompatActivity {
     private void calculateResults() {
         int winner = finishOrder.get(0);
         int runnerUp = finishOrder.get(1);
-        tvResult.setText("VỀ NHẤT: Ngựa " + winner + " - VỀ NHÌ: Ngựa " + runnerUp);
+        String resultText = "VỀ NHẤT: Ngựa " + winner + " - VỀ NHÌ: Ngựa " + runnerUp;
 
-        // Duyệt từng ngựa đã cược
+        int betChange = 0 - currentTotalBet;
+        int totalBet = 0;
         for (Map.Entry<Integer, Integer> entry : betHorsesMap.entrySet()) {
             int horseNumber = entry.getKey();
             int betAmount = entry.getValue();
-
+            totalBet += betAmount;
             if (horseNumber == winner) {
-                totalCoins += (int)(betAmount * 1.9);
+                int win = (int) (betAmount * 1.9);
+                totalCoins += win;
+                betChange += win;
             } else if (horseNumber == runnerUp) {
                 totalCoins += betAmount;
+                betChange += betAmount;
+            } else if (horseNumber != winner && horseNumber != runnerUp) {
+                betChange -= betAmount;
             }
-
         }
 
         Log.d("RESULT", "Số xu sau race: " + totalCoins);
         updateCoinDisplay();
         betHorsesMap.clear();
         btnStart.setVisibility(View.GONE);
-    }
 
+        // Chuyển sang màn hình kết quả
+        Intent intent = new Intent(RacingActivity.this, ResultActivity.class);
+        intent.putExtra("RESULT", resultText);
+        intent.putExtra("BET_CHANGE", betChange);
+        intent.putExtra("TOTAL_COINS", totalCoins);
+        intent.putExtra("TOTAL_BET", totalBet);
+        startActivity(intent);
+    }
 
     private void updateCoinDisplay() {
         tvCoins.setText("XU: " + totalCoins);
