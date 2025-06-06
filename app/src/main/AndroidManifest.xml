@@ -24,6 +24,7 @@
         <activity android:name=".RacingActivity"/>
         <activity android:name=".BetActivity"/>
         <activity android:name=".TutorialActivity"/>
+        <activity android:name=".ResultActivity"/>
     </application>
 
 </manifest>
