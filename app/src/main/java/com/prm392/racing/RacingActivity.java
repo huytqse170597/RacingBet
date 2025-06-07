@@ -63,15 +63,12 @@ public class RacingActivity extends AppCompatActivity {
             btnStart.setVisibility(View.GONE);
         }
 
-        // betHorsesMap.put(1, 50);
-        // betHorsesMap.put(2, 40);
-        // betHorsesMap.put(3, 30);
-
         finishLine.post(() -> {
             finishLineX = finishLine.getX() + finishLine.getWidth();
             Log.d("FinishLine", "Vị trí X của vạch đích: " + finishLineX);
         });
 
+        // Start Game Button
         btnStart.setOnClickListener(v -> {
             if (!isRaceRunning) {
                 totalCoins -= currentTotalBet;
