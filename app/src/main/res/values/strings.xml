@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">RacingBet</string>
+    <string name="quit">Thoát</string>
+    <string name="guide">Hướng Dẫn</string>
+    <string name="start">Bắt Đầu</string>
+    <string name="login">Đăng Kí</string>
 </resources>
